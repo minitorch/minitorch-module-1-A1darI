@@ -169,7 +169,6 @@ class Scalar:
             if not input.is_constant():
                 result.append((input, grad))
         return result
-        
 
     def backward(self, d_output: Optional[float] = None) -> None:
         """

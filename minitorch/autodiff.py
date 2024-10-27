@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Iterable, List, Tuple
+from typing import Any, Iterable, Tuple
 
 from typing_extensions import Protocol
 
@@ -86,7 +86,9 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
     variable_index = 0
     while variable_index < len(variables):
         var, d = variables[variable_index]
-        print(variables, variable_index, var, d, var.name, var.is_leaf(), var.derivative)
+        print(
+            variables, variable_index, var, d, var.name, var.is_leaf(), var.derivative
+        )
         variable_index += 1
         if var.is_leaf():
             var.accumulate_derivative(d)
