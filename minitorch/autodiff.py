@@ -22,8 +22,13 @@ def central_difference(f: Any, *vals: Any, arg: int = 0, epsilon: float = 1e-6) 
     Returns:
         An approximation of $f'_i(x_0, \ldots, x_{n-1})$
     """
-    # TODO: Implement for Task 1.1.
-    raise NotImplementedError("Need to implement for Task 1.1")
+    vals_right = list(vals)
+    vals_left = list(vals)
+
+    vals_right[arg] += epsilon
+    vals_left[arg] -= epsilon
+
+    return (f(*vals_right) - f(*vals_left)) / (2 * epsilon)
 
 
 variable_count = 1
@@ -76,8 +81,19 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
 
     No return. Should write to its results to the derivative values of each leaf through `accumulate_derivative`.
     """
-    # TODO: Implement for Task 1.4.
-    raise NotImplementedError("Need to implement for Task 1.4")
+    variables = [(variable, deriv)]
+
+    variable_index = 0
+    while variable_index < len(variables):
+        var, d = variables[variable_index]
+        print(variables, variable_index, var, d, var.name, var.is_leaf(), var.derivative)
+        variable_index += 1
+        if var.is_leaf():
+            var.accumulate_derivative(d)
+        else:
+            if not var.is_constant():
+                for input, d_input in var.chain_rule(d):
+                    variables.append((input, d_input))
 
 
 @dataclass
